@@ -1,15 +1,15 @@
-"use client";
+﻿"use client";
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { io } from 'socket.io-client';
 
-const socket = io('http://localhost:5000');
+const socket = io('http://192.168.1.220:5000');
 
 function App() {
   const [preparingTasks, setPreparingTasks] = useState([]);
   const [finishedTasks, setFinishedTasks] = useState([]);
-  const [formData, setFormData] = useState({ category: 'BK', prefix: 'PM', number: '' });
+  const [formData, setFormData] = useState({ category: 'BK', number: '' });
 
   useEffect(() => {
     loadTasks();
@@ -25,7 +25,7 @@ function App() {
   }, []);
 
   const loadTasks = async () => {
-    const response = await axios.get('http://localhost:5000/tasks');
+    const response = await axios.get('http://192.168.1.220:5000/tasks');
     setPreparingTasks(response.data.preparing);
     setFinishedTasks(response.data.finished);
   };
@@ -35,18 +35,26 @@ function App() {
   };
 
   const addTask = async () => {
-    if (!formData.category || !formData.prefix || !formData.number) {
+    if (!formData.category || !formData.number) {
       alert('Please fill out all fields.');
       return;
     }
-    await axios.post('http://localhost:5000/tasks', formData);
-    setFormData({ category: 'BK', prefix: 'PM', number: '' });
+    await axios.post('http://192.168.1.220:5000/tasks', formData);
+    setFormData({ category: 'BK', number: '' });
   };
 
   const finishTask = async (taskId) => {
-    await axios.post('http://localhost:5000/tasks/finish', { task_id: taskId });
+    await axios.post('http://192.168.1.220:5000/tasks/finish', { task_id: taskId });
   };
 
+  // Safely sort finished tasks by finished_at time (latest first)
+  const sortedFinishedTasks = finishedTasks?.length
+    ? finishedTasks.sort((a, b) => {
+        const dateA = new Date(a.finished_at);
+        const dateB = new Date(b.finished_at);
+        return dateB - dateA; // descending order
+      })
+    : [];
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <h2 className="text-4xl font-bold mb-6 text-center text-red-600">Queue System</h2>
@@ -64,22 +72,12 @@ function App() {
             <option value="BK">BK</option>
             <option value="CS">CS</option>
           </select>
-          <select
-            name="prefix"
-            value={formData.prefix}
-            onChange={handleChange}
-            className="border rounded-lg p-3 w-full"
-          >
-            <option value="PM">PM</option>
-            <option value="JN">JN</option>
-            <option value="SM">SM</option>
-          </select>
           <input
             type="text"
             name="number"
             value={formData.number}
             onChange={handleChange}
-            placeholder="4-digit number"
+            placeholder="enter number"
             className="border rounded-lg p-3 w-full"
           />
           <button
@@ -100,7 +98,7 @@ function App() {
             {preparingTasks?.map((task, index) => (
               <div key={index} className="bg-white border rounded-lg p-4 shadow-md flex justify-between items-center">
                 <div>
-                  <span className="block font-bold text-xl">{`${task.category}${task.prefix}/${task.number}`}</span>
+                  <span className="block font-bold text-xl">{`${task.category}${task.number}`}</span>
                   <span className="block text-sm text-gray-400">
                     Created at: {new Date(task.created_at).toLocaleString()}
                   </span>
@@ -120,10 +118,10 @@ function App() {
         <div className="bg-green-50 p-6 rounded-lg shadow-md">
           <h3 className="text-2xl font-semibold mb-4 text-green-700">✅ Finished Queue</h3>
           <div className="grid grid-cols-2 gap-4 overflow-y-auto max-h-[500px]">
-            {finishedTasks?.map((task, index) => (
+            {sortedFinishedTasks?.map((task, index) => (
               <div key={index} className="bg-white border rounded-lg p-4 shadow-md">
                 <div>
-                  <span className="block font-bold text-xl">{`${task.category}${task.prefix}/${task.number}`}</span>
+                  <span className="block font-bold text-xl">{`${task.category}${task.number}`}</span>
                   <span className="block text-sm text-gray-400">
                     Created at: {new Date(task.created_at).toLocaleString()}
                   </span>

@@ -1,6 +1,7 @@
-from flask import Flask, request, jsonify
+﻿from flask import Flask, request, jsonify
 from flask_socketio import SocketIO
 import pandas as pd
+from apscheduler.schedulers.background import BackgroundScheduler
 from flask_cors import CORS
 import os
 import uuid
@@ -13,17 +14,33 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 
 EXCEL_FILE = "tasks.xlsx"
 
+
 # Initialize Excel file if not exists
 if not os.path.exists(EXCEL_FILE):
+    df = pd.DataFrame(columns=["category", "number", "status"])
+    df.to_excel(EXCEL_FILE, index=False)
+
+scheduler = BackgroundScheduler()
+
+def clear_excel_file():
     df = pd.DataFrame(columns=["category", "prefix", "number", "status"])
     df.to_excel(EXCEL_FILE, index=False)
+    print(f"Excel file cleared at {datetime.now()}")
+
+scheduler.add_job(clear_excel_file, 'cron', hour=0, minute=0, second=0, timezone='Asia/Bangkok')
+
+# Start the scheduler
+scheduler.start()
+
+# Ensure the scheduler shuts down gracefully when the app is stopped
+
 
 def load_tasks():
     try:
         return pd.read_excel(EXCEL_FILE)
     except Exception as e:
         print(f"Error loading tasks: {e}")
-        return pd.DataFrame(columns=["category", "prefix", "number", "status"])
+        return pd.DataFrame(columns=["category", "number", "status"])
 
 def save_tasks(df):
     df.to_excel(EXCEL_FILE, index=False)
@@ -57,17 +74,12 @@ def get_tasks():
 def add_task():
     data = request.json
     category = data.get('category')
-    prefix = data.get('prefix')
     number = data.get('number')
-
-    if not (category and prefix and number and len(number) == 4 and number.isdigit()):
-        return jsonify({'error': 'Invalid input'}), 400
 
     df = load_tasks()
     new_task = pd.DataFrame([{
         "task_id": str(uuid.uuid4()),
         "category": category,
-        "prefix": prefix,
         "number": number,
         "created_at": pd.Timestamp.now().isoformat(),
         "finished_at": None,
