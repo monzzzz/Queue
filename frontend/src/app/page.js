@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { io } from 'socket.io-client';
 
-const socket = io('http://localhost:5000');
+const socket = io('http://192.168.1.127:5000');
 
 function App() {
   const [preparingTasks, setPreparingTasks] = useState([]);
@@ -25,7 +25,7 @@ function App() {
   }, []);
 
   const loadTasks = async () => {
-    const response = await axios.get('http://localhost:5000/tasks');
+    const response = await axios.get('http://192.168.1.127:5000/tasks');
     setPreparingTasks(response.data.preparing);
     setFinishedTasks(response.data.finished);
   };
@@ -39,12 +39,12 @@ function App() {
       alert('Please fill out all fields.');
       return;
     }
-    await axios.post('http://localhost:5000/tasks', formData);
+    await axios.post('http://192.168.1.127:5000/tasks', formData);
     setFormData({ category: 'BK', prefix: 'PM', number: '' });
   };
 
   const finishTask = async (taskId) => {
-    await axios.post('http://localhost:5000/tasks/finish', { task_id: taskId });
+    await axios.post('http://192.168.1.127:5000/tasks/finish', { task_id: taskId });
   };
 
   return (
