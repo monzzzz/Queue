@@ -152,4 +152,5 @@ def handle_disconnect():
 # 🟢 Start Flask Server with SocketIO
 # ========================
 if __name__ == '__main__':
-    socketio.run(app, debug=True, host='0.0.0.0', port=5001)
+    ssl_context = ('server.crt', 'server.key') 
+    socketio.run(app, debug=True, host='0.0.0.0', port=5000, ssl_context=ssl_context)
