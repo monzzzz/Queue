@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { io } from 'socket.io-client';
 
-const socket = io(`http://${process.env.NEXT_PUBLIC_HOST}:5000`);
+const socket = io(`http://${process.env.NEXT_PUBLIC_HOST}:5001`);
 
 function Order() {
   const [preparingTasks, setPreparingTasks] = useState([]);
@@ -25,7 +25,7 @@ function Order() {
   }, []);
 
   const loadTasks = async () => {
-    const response = await axios.get(`http://${process.env.NEXT_PUBLIC_HOST}:5000/tasks`);
+    const response = await axios.get(`http://${process.env.NEXT_PUBLIC_HOST}:5001/tasks`);
     setPreparingTasks(response.data.preparing);
     setFinishedTasks(response.data.finished);
   };
@@ -38,12 +38,12 @@ function Order() {
       alert('Please fill out all fields.');
       return;
     }
-    await axios.post(`http://${process.env.NEXT_PUBLIC_HOST}:5000/tasks`, formData);
+    await axios.post(`http://${process.env.NEXT_PUBLIC_HOST}:5001/tasks`, formData);
     setFormData({ category: 'BK', number: '' });
   };
 
   const finishTask = async (taskId) => {
-    await axios.post(`http://${process.env.NEXT_PUBLIC_HOST}:5000/tasks/finish`, { task_id: taskId });
+    await axios.post(`http://${process.env.NEXT_PUBLIC_HOST}:5001/tasks/finish`, { task_id: taskId });
   };
 
   // Safely sort finished tasks by finished_at time (latest first)

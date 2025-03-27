@@ -1,62 +1,56 @@
-﻿"use client";
+﻿'use client';
 
-import React, { useEffect, useState } from 'react';
-<<<<<<< HEAD
-import axios from 'axios';
-import { io } from 'socket.io-client';
-
-const socket = io('http://192.168.1.127:5000');
+import React from 'react';
+import Link from 'next/link';
 
 function App() {
-  const [preparingTasks, setPreparingTasks] = useState([]);
-  const [finishedTasks, setFinishedTasks] = useState([]);
-  const [formData, setFormData] = useState({ category: 'BK', prefix: 'PM', number: '' });
-
-  useEffect(() => {
-    loadTasks();
-
-    socket.on('update_tasks', (data) => {
-      setPreparingTasks(data.preparing);
-      setFinishedTasks(data.finished);
-    });
-
-    return () => {
-      socket.disconnect(); // Clean up on unmount
-    };
-  }, []);
-
-  const loadTasks = async () => {
-    const response = await axios.get('http://192.168.1.127:5000/tasks');
-    setPreparingTasks(response.data.preparing);
-    setFinishedTasks(response.data.finished);
-  };
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const addTask = async () => {
-    if (!formData.category || !formData.prefix || !formData.number) {
-      alert('Please fill out all fields.');
-      return;
-    }
-    await axios.post('http://192.168.1.127:5000/tasks', formData);
-    setFormData({ category: 'BK', prefix: 'PM', number: '' });
-  };
-
-  const finishTask = async (taskId) => {
-    await axios.post('http://192.168.1.127:5000/tasks/finish', { task_id: taskId });
-  };
-
-=======
-
-function App() {
->>>>>>> 7982ec14162f21bca79bf83a16f23da56669aba2
   return (
-    <div>
-      
+    <div style={styles.container}>
+      <h1 style={styles.title}>ยินดีต้อนรับสู่เว็บไซต์ร้านเล็ก</h1>
+
+      <div style={styles.buttonGroup}>
+        <Link href="/barcode">
+          <button style={styles.button}>สแกนบาร์โค้ด</button>
+        </Link>
+
+        <Link href="/order">
+          <button style={styles.button}>รายการคำสั่งซื้อ</button>
+        </Link>
+      </div>
     </div>
   );
 }
+
+const styles = {
+  container: {
+    height: '100vh',
+    background: 'linear-gradient(to bottom right, #f8fafc, #dbeafe)',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontFamily: "'Prompt', sans-serif", // Thai-friendly font if loaded
+  },
+  title: {
+    fontSize: '2.5rem',
+    color: '#1e293b',
+    marginBottom: '40px',
+  },
+  buttonGroup: {
+    display: 'flex',
+    gap: '20px',
+    flexWrap: 'wrap',
+  },
+  button: {
+    backgroundColor: '#3b82f6',
+    color: '#ffffff',
+    border: 'none',
+    borderRadius: '8px',
+    padding: '12px 24px',
+    fontSize: '1.1rem',
+    cursor: 'pointer',
+    transition: 'background-color 0.2s ease',
+  },
+};
 
 export default App;

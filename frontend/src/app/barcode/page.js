@@ -11,7 +11,7 @@ function Barcode() {
   // Modified function accepts the barcode as a parameter
   const sendBarcodeToBackend = async (scannedBarcode) => {
     try {
-      const response = await axios.post(`http://${process.env.NEXT_PUBLIC_HOST}:5000/upload`, { barcode: scannedBarcode });
+      const response = await axios.post(`http://${process.env.NEXT_PUBLIC_HOST}:5001/upload`, { barcode: scannedBarcode });
       alert(`Price for barcode ${scannedBarcode}: ${response.data.price}`);
     } catch (error) {
       console.error("Error sending barcode to backend:", error);
