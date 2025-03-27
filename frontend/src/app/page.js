@@ -71,6 +71,7 @@ function App() {
           >
             <option value="BK">BK</option>
             <option value="CS">CS</option>
+	    <option value="DS">DS</option>
           </select>
           <input
             type="text"
