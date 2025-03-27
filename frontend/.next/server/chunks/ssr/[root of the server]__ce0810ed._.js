@@ -149,12 +149,15 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/axios/lib/axios.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$socket$2e$io$2d$client$2f$build$2f$esm$2d$debug$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$module__evaluation$3e$__ = __turbopack_context__.i("[project]/node_modules/socket.io-client/build/esm-debug/index.js [app-ssr] (ecmascript) <module evaluation>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$socket$2e$io$2d$client$2f$build$2f$esm$2d$debug$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/node_modules/socket.io-client/build/esm-debug/index.js [app-ssr] (ecmascript) <locals>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$html5$2d$qrcode$2f$esm$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$module__evaluation$3e$__ = __turbopack_context__.i("[project]/node_modules/html5-qrcode/esm/index.js [app-ssr] (ecmascript) <module evaluation>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$html5$2d$qrcode$2f$esm$2f$html5$2d$qrcode$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/html5-qrcode/esm/html5-qrcode.js [app-ssr] (ecmascript)");
 "use client";
 ;
 ;
 ;
 ;
-const socket = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$socket$2e$io$2d$client$2f$build$2f$esm$2d$debug$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__["io"])('http://192.168.1.220:5000');
+;
+const socket = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$socket$2e$io$2d$client$2f$build$2f$esm$2d$debug$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$locals$3e$__["io"])('http://192.168.1.207:5000');
 function App() {
     const [preparingTasks, setPreparingTasks] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
     const [finishedTasks, setFinishedTasks] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
@@ -162,6 +165,8 @@ function App() {
         category: 'BK',
         number: ''
     });
+    const [barcode, setBarcode] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(""); // State to store the scanned barcode
+    const [isScanning, setIsScanning] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false); // State to toggle scanning
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         loadTasks();
         socket.on('update_tasks', (data)=>{
@@ -173,7 +178,7 @@ function App() {
         };
     }, []);
     const loadTasks = async ()=>{
-        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get('http://192.168.1.220:5000/tasks');
+        const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].get('http://192.168.1.207:5000/tasks');
         setPreparingTasks(response.data.preparing);
         setFinishedTasks(response.data.finished);
     };
@@ -183,19 +188,61 @@ function App() {
             [e.target.name]: e.target.value
         });
     };
+    const startScanning = ()=>{
+        const scannerElement = document.querySelector("#barcode-scanner");
+        if (!scannerElement) {
+            console.error("Scanner element not found.");
+            return;
+        }
+        setIsScanning(true);
+        const html5QrCode = new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$html5$2d$qrcode$2f$esm$2f$html5$2d$qrcode$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Html5Qrcode"]("barcode-scanner");
+        html5QrCode.start({
+            facingMode: "environment"
+        }, {
+            fps: 10,
+            qrbox: {
+                width: 250,
+                height: 250
+            }
+        }, (decodedText)=>{
+            setBarcode(decodedText); // Set the scanned barcode
+            html5QrCode.stop(); // Stop scanning after detecting a barcode
+            setIsScanning(false);
+        }, (errorMessage)=>{
+            console.warn("Scanning error:", errorMessage);
+        }).catch((err)=>{
+            console.error("Error initializing html5-qrcode:", err);
+            setIsScanning(false);
+        });
+    };
+    const sendBarcodeToBackend = async ()=>{
+        if (!barcode) {
+            alert("No barcode scanned.");
+            return;
+        }
+        try {
+            const response = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post("http://192.168.1.207:5000/upload", {
+                barcode
+            });
+            alert(`Price for barcode ${barcode}: ${response.data.price}`);
+        } catch (error) {
+            console.error("Error sending barcode to backend:", error);
+            alert("Failed to process the barcode.");
+        }
+    };
     const addTask = async ()=>{
         if (!formData.category || !formData.number) {
             alert('Please fill out all fields.');
             return;
         }
-        await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post('http://192.168.1.220:5000/tasks', formData);
+        await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post('http://192.168.1.207:5000/tasks', formData);
         setFormData({
             category: 'BK',
             number: ''
         });
     };
     const finishTask = async (taskId)=>{
-        await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post('http://192.168.1.220:5000/tasks/finish', {
+        await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"].post('http://192.168.1.207:5000/tasks/finish', {
             task_id: taskId
         });
     };
@@ -213,7 +260,7 @@ function App() {
                 children: "Queue System"
             }, void 0, false, {
                 fileName: "[project]/src/app/page.js",
-                lineNumber: 60,
+                lineNumber: 110,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -224,7 +271,7 @@ function App() {
                         children: "➕ Add Order"
                     }, void 0, false, {
                         fileName: "[project]/src/app/page.js",
-                        lineNumber: 64,
+                        lineNumber: 114,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -241,7 +288,7 @@ function App() {
                                         children: "BK"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/page.js",
-                                        lineNumber: 72,
+                                        lineNumber: 122,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -249,13 +296,13 @@ function App() {
                                         children: "CS"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/page.js",
-                                        lineNumber: 73,
+                                        lineNumber: 123,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/page.js",
-                                lineNumber: 66,
+                                lineNumber: 116,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -267,7 +314,7 @@ function App() {
                                 className: "border rounded-lg p-3 w-full"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/page.js",
-                                lineNumber: 75,
+                                lineNumber: 125,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -276,20 +323,98 @@ function App() {
                                 children: "Add Task"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/page.js",
-                                lineNumber: 83,
+                                lineNumber: 133,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/page.js",
-                        lineNumber: 65,
+                        lineNumber: 115,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/page.js",
-                lineNumber: 63,
+                lineNumber: 113,
                 columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md mb-8",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
+                        className: "text-2xl font-semibold mb-4 text-gray-700",
+                        children: "📷 Barcode Scanner"
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/page.js",
+                        lineNumber: 144,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        id: "barcode-scanner",
+                        className: "w-full h-64 bg-gray-200 rounded-lg mb-4"
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/page.js",
+                        lineNumber: 145,
+                        columnNumber: 9
+                    }, this),
+                    isScanning ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                        onClick: ()=>setIsScanning(false),
+                        className: "bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition",
+                        children: "Stop Scanning"
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/page.js",
+                        lineNumber: 147,
+                        columnNumber: 11
+                    }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                        onClick: startScanning,
+                        className: "bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition",
+                        children: "Start Scanning"
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/page.js",
+                        lineNumber: 154,
+                        columnNumber: 11
+                    }, this),
+                    barcode && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "mt-4",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-lg text-gray-700",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("strong", {
+                                        children: "Scanned Barcode:"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/app/page.js",
+                                        lineNumber: 164,
+                                        columnNumber: 15
+                                    }, this),
+                                    " ",
+                                    barcode
+                                ]
+                            }, void 0, true, {
+                                fileName: "[project]/src/app/page.js",
+                                lineNumber: 163,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                onClick: sendBarcodeToBackend,
+                                className: "bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition mt-2",
+                                children: "Send to Backend"
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/page.js",
+                                lineNumber: 166,
+                                columnNumber: 13
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/app/page.js",
+                        lineNumber: 162,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/app/page.js",
+                lineNumber: 143,
+                columnNumber: 8
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "grid grid-cols-2 gap-6",
@@ -302,7 +427,7 @@ function App() {
                                 children: "🕒 Preparing Queue"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/page.js",
-                                lineNumber: 96,
+                                lineNumber: 180,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -317,7 +442,7 @@ function App() {
                                                         children: `${task.category}${task.number}`
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/page.js",
-                                                        lineNumber: 101,
+                                                        lineNumber: 185,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -328,13 +453,13 @@ function App() {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/app/page.js",
-                                                        lineNumber: 102,
+                                                        lineNumber: 186,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/page.js",
-                                                lineNumber: 100,
+                                                lineNumber: 184,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -343,24 +468,24 @@ function App() {
                                                 children: "✅ Finish"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/page.js",
-                                                lineNumber: 106,
+                                                lineNumber: 190,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, index, true, {
                                         fileName: "[project]/src/app/page.js",
-                                        lineNumber: 99,
+                                        lineNumber: 183,
                                         columnNumber: 15
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/src/app/page.js",
-                                lineNumber: 97,
+                                lineNumber: 181,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/page.js",
-                        lineNumber: 95,
+                        lineNumber: 179,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -371,7 +496,7 @@ function App() {
                                 children: "✅ Finished Queue"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/page.js",
-                                lineNumber: 119,
+                                lineNumber: 203,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -385,7 +510,7 @@ function App() {
                                                     children: `${task.category}${task.number}`
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/page.js",
-                                                    lineNumber: 124,
+                                                    lineNumber: 208,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -396,7 +521,7 @@ function App() {
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/page.js",
-                                                    lineNumber: 125,
+                                                    lineNumber: 209,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -407,41 +532,41 @@ function App() {
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/app/page.js",
-                                                    lineNumber: 128,
+                                                    lineNumber: 212,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/page.js",
-                                            lineNumber: 123,
+                                            lineNumber: 207,
                                             columnNumber: 17
                                         }, this)
                                     }, index, false, {
                                         fileName: "[project]/src/app/page.js",
-                                        lineNumber: 122,
+                                        lineNumber: 206,
                                         columnNumber: 15
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/src/app/page.js",
-                                lineNumber: 120,
+                                lineNumber: 204,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/page.js",
-                        lineNumber: 118,
+                        lineNumber: 202,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/page.js",
-                lineNumber: 93,
+                lineNumber: 177,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/page.js",
-        lineNumber: 59,
+        lineNumber: 109,
         columnNumber: 5
     }, this);
 }

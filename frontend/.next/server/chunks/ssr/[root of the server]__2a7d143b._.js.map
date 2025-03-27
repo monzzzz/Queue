@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 151, "column": 0}, "map": {"version":3,"sources":["file:///Users/monz/Code/queue/frontend/src/app/page.js"],"sourcesContent":["\"use client\";\n\nimport React, { useEffect, useState } from 'react';\nimport axios from 'axios';\nimport { io } from 'socket.io-client';\nimport { Html5Qrcode } from \"html5-qrcode\";\nimport Barcode from './pages/Barcode';\nimport Order from './pages/Order';\nimport Link from 'next/link';\n\nconst socket = io('http://192.168.1.207:5000');\n\nfunction App() {\n  return (\n    <div>\n      <Router>\n      <Routes>\n        <Route path=\"/order\" element={<Order />} />\n        <Route path=\"/barcode\" element={<Barcode />} />\n      </Routes>\n    </Router>\n    </div>\n  );\n}\n\nexport default App;"],"names":[],"mappings":";;;;AAEA;AAEA;AAAA;AACA;;;;;;;;;;;AAGA;AARA;;;;;;;;;AAUA,MAAM,SAAS,CAAA,GAAA,wLAAA,CAAA,KAAE,AAAD,EAAE;AAElB,SAAS;IACP,qBACE,8OAAC;kBACC,cAAA,8OAAC;sBACD,cAAA,8OAAC;;kCACC,8OAAC;wBAAM,MAAK;wBAAS,uBAAS,8OAAC;;;;;;;;;;kCAC/B,8OAAC;wBAAM,MAAK;wBAAW,uBAAS,8OAAC;;;;;;;;;;;;;;;;;;;;;;;;;;AAKzC;uCAEe","debugId":null}},
+    {"offset": {"line": 227, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}

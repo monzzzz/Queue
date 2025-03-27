@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 127, "column": 0}, "map": {"version":3,"sources":["file:///Users/monz/Code/queue/frontend/src/app/page.js"],"sourcesContent":["\"use client\";\n\nimport React, { useEffect, useState } from 'react';\nimport axios from 'axios';\nimport { io } from 'socket.io-client';\nimport { Html5Qrcode } from \"html5-qrcode\";\n\nconst socket = io('http://192.168.1.207:5000');\n\nfunction App() {\n  return (\n    <div>\n      \n    </div>\n  );\n}\n\nexport default App;"],"names":[],"mappings":";;;;AAEA;AAEA;AAAA;AACA;AALA;;;;;;AAOA,MAAM,SAAS,CAAA,GAAA,wLAAA,CAAA,KAAE,AAAD,EAAE;AAElB,SAAS;IACP,qBACE,8OAAC;;;;;AAIL;uCAEe","debugId":null}},
+    {"offset": {"line": 150, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}

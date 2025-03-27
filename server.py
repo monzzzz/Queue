@@ -5,6 +5,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from flask_cors import CORS
 import os
 import uuid
+from getPrice import get_price_by_barcode 
 
 app = Flask(__name__)
 
@@ -112,7 +113,30 @@ def finish_task():
 
     return jsonify({'error': 'Invalid task'}), 400
 
+
 # ========================
+# 🟢 Endpoint to Process Barcode and Get Price
+# ========================
+@app.route('/upload', methods=['POST'])
+def process_barcode():
+    data = request.json
+    barcode = data.get('barcode')
+    print("sent to backend with barcode", barcode)
+
+    if not barcode:
+        return jsonify({'error': 'No barcode provided'}), 400
+
+    # Use the get_price_by_barcode function to fetch the price
+    price = get_price_by_barcode(barcode)
+
+    if price is None:
+        return jsonify({'error': 'No price found for the provided barcode'}), 404
+
+    return jsonify({'barcode': barcode, 'price': price}), 200
+
+# ========================
+# 🟢 Endpoint to Process Image and Get Price
+#
 # 🟢 WebSocket Connection
 # ========================
 @socketio.on('connect')
