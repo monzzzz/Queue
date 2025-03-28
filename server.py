@@ -5,7 +5,6 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from flask_cors import CORS
 import os
 import uuid
-from getPrice import get_price_by_barcode 
 
 app = Flask(__name__)
 

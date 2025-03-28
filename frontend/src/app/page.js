@@ -12,37 +12,6 @@ function App() {
         <Link href="/barcode">
           <button style={styles.button}>สแกนบาร์โค้ด</button>
         </Link>
-      {/* ✅ Add Task Form */}
-      <div className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md mb-8">
-        <h3 className="text-2xl font-semibold mb-4 text-gray-700">➕ Add Order</h3>
-        <div className="flex gap-4">
-          <select
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
-            className="border rounded-lg p-3 w-full"
-          >
-            <option value="BK">BK</option>
-            <option value="CS">CS</option>
-	    <option value="DS">DS</option>
-          </select>
-          <input
-            type="text"
-            name="number"
-            value={formData.number}
-            onChange={handleChange}
-            placeholder="enter number"
-            className="border rounded-lg p-3 w-full"
-          />
-          <button
-            onClick={addTask}
-            className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition"
-          >
-            Add Task
-          </button>
-        </div>
-      </div>
-
         <Link href="/order">
           <button style={styles.button}>รายการคำสั่งซื้อ</button>
         </Link>

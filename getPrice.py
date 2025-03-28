@@ -22,6 +22,3 @@ def get_price_by_barcode(barcode):
     except pyodbc.Error as e:
         print("Error in connection:", e)
         return None
-
-# Example usage:
-get_price_by_barcode("0320007919P")
