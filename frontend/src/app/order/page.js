@@ -49,15 +49,26 @@ function Order() {
     await axios.post(`https://${process.env.NEXT_PUBLIC_HOST}:5000/tasks/finish`, { task_id: taskId });
   };
 
-  // Safely sort finished tasks by finished_at time (latest first)
+  // Filter tasks older than 1 hour
+  const isWithinOneHour = (taskCreatedAt) => {
+    const createdTime = new Date(taskCreatedAt);
+    const currentTime = new Date();
+    const oneHourInMs = 60 * 60 * 1000; // 1 hour in milliseconds
+    return (currentTime - createdTime) < oneHourInMs;
+  };
 
-  // Safely sort finished tasks by finished_at time (latest first)
+  // Filter preparing tasks to only show those within 1 hour
+  const filteredPreparingTasks = preparingTasks?.filter(task => isWithinOneHour(task.created_at)) || [];
+
+  // Safely sort finished tasks by finished_at time (latest first) and filter by 1 hour
   const sortedFinishedTasks = finishedTasks?.length
-    ? finishedTasks.sort((a, b) => {
-        const dateA = new Date(a.finished_at);
-        const dateB = new Date(b.finished_at);
-        return dateB - dateA; // descending order
-      })
+    ? finishedTasks
+        .filter(task => isWithinOneHour(task.created_at))
+        .sort((a, b) => {
+          const dateA = new Date(a.finished_at);
+          const dateB = new Date(b.finished_at);
+          return dateB - dateA; // descending order
+        })
     : [];
   return (
     <div className="min-h-screen bg-gray-100 p-6">
@@ -99,7 +110,7 @@ function Order() {
         <div className="bg-yellow-50 p-6 rounded-lg shadow-md">
           <h3 className="text-2xl font-semibold mb-4 text-yellow-700">🕒 Preparing Queue</h3>
           <div className="grid grid-cols-2 gap-4 overflow-y-auto max-h-[500px]">
-            {preparingTasks?.map((task, index) => (
+            {filteredPreparingTasks?.map((task, index) => (
               <div key={index} className="bg-white border rounded-lg p-4 shadow-md flex justify-between items-center">
                 <div>
                   <span className="block font-bold text-xl">{`${task.category}${task.number}`}</span>
