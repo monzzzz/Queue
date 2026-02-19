@@ -5,6 +5,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from flask_cors import CORS
 import os
 import uuid
+from getPrice import get_price_by_barcode
 
 app = Flask(__name__)
 
@@ -13,7 +14,6 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 EXCEL_FILE = "tasks.xlsx"
-
 
 # Initialize Excel file if not exists
 if not os.path.exists(EXCEL_FILE):
